@@ -1,0 +1,30 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+ <!-- Begin page content -->
+    <div class="container">
+      <div class="page-header">
+        <h1>Preguntas<span>Prueba tus conocimientos</span></h1>
+      </div>
+    </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <ul class="nav nav-stacked col-md-8 col-lg-8 col-sm-8" ng-repeat="quiz in quizes">
+        <li ng-if="msg === undefined">
+            <form name="formQuiz" ng-submit="validateQuiz(formQuiz, quiz)" >
+              <legend><span><a href="{{ '/quizzes/' + quiz.quizId }}">#{{quiz.quizId}}</a></span> {{quiz.pregunta}}<span class='tematica'>{{quiz.tema}}<span></legend>
+            
+              <div class="form-group form-inline">
+                <input type="text" class="form-control" placeholder="responde aquí" required ng-model="formQuiz.respuesta"> 
+                <button type="submit" class="btn btn-primary">Enviar</button>
+              </div>
+            </form>
+        </li>
+        <li ng-if="msg !==undefined ">
+          <div class="alert {{classFeedback}}"><p><strong>{{respuesta}}</strong> {{msg}} </p></div>
+        </li>  
+      </ul>
+    </div>
+  </div>
+</div>

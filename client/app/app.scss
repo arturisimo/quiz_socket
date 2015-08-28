@@ -1,0 +1,91 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
+$fa-font-path: "../bower_components/font-awesome/fonts";
+
+@import '../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
+@import '../bower_components/font-awesome/scss/font-awesome';
+
+/**
+ * App-wide Styles
+ */
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/**
+ * stycky footer
+ */ 
+html {
+    min-height: 100%;
+    position: relative;
+}
+body {
+    margin-bottom: 60px;
+}
+.footer {
+    background-color: #f5f5f5;
+    bottom: 0;
+    height: 60px;
+    position: absolute;
+    width: 100%;
+}
+body > .container {
+    padding: 60px 15px 0;
+}
+.container .text-muted {
+    margin: 20px 0;
+}
+.footer > .container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.navbar-brand {
+    color: black;
+    font-size: 35px;
+    padding: 0 15px;
+}
+.navbar-brand img {
+    height: 50px;
+}
+
+/**
+ * app styles
+ */
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+h1 span {
+	margin-left: 10px;
+	font-size: 15px;
+}
+.page-header {
+	margin: 0px;
+	border:none;
+}
+.text-muted{
+	font-size: 11px;
+}
+.text-muted a {
+    color: #777;
+    text-decoration: underline;
+}
+
+// Component styles are injected through grunt
+// injector
+@import 'account/login/login.scss';
+@import 'admin/admin.scss';
+@import 'main/main.scss';
+@import 'quiz/quiz.scss';
+@import '../components/footer/footer.scss';
+@import '../components/modal/modal.scss';
+// endinjector

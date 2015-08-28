@@ -1,0 +1,55 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+ <!-- Begin page content -->
+    <div class="container">
+      <div class="page-header">
+        <h1>Zona de administración</h1>
+      </div>
+    </div>
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 table-quiz" ng-if="msg === undefined">
+		<div>
+			<ul class="th">
+				<li class="hq1">id</li><li class="hq2">Pregunta</li><li class="hq3">Respuesta</li><li class="hq4">Temática</li><li class="hq5">Comentarios</li><li class="hq6"></li>
+			</ul>
+		</div>
+		<div>	
+			<div ng-repeat="quiz in quizes" >
+				<ul class="tr">
+					<li class="hq1">{{quiz.quizId}}</li><li class="hq2">{{quiz.pregunta}}</li><li class="hq3">{{quiz.respuesta}}</li><li class="hq4">{{quiz.tema}}</li>
+					<li class="hq5"><a href="#" ng-click="toggleComment(quiz.quizId)" ng-if="quiz.comments.length > 0">{{quiz.comments.length}} [  <span id="icon_{{quiz.quizId}}">+</span> ]</a></li>
+					<li class="hq6">
+						<a href="/quizzes/{{quiz.quizId}}" class="glyphicon glyphicon-search" title="Consultar"></a>
+						<a href="/quizzes/{{quiz.quizId}}/edit" class="glyphicon glyphicon-edit" title="Modificar"></a>
+						<a href="#" ng-click="delete(quiz)" class="glyphicon glyphicon-remove" title="Eliminar"></a>
+					</li>
+				</ul>
+				<div class="comments hide" id="comments_{{quiz.quizId}}" ng-if="quiz.comments.length > 0 ">
+					<div>
+						<ul class="th">
+							<li class="hq2">Nombre</li><li class="hq2">Comentario</li><li class="hq6"></li>
+						</ul>
+					</div>	
+					<div ng-repeat="comment in quiz.comments">
+						<ul class="tr">
+							<li class="hq2"><a href="{{comment.site}}">{{comment.nombre}}</a></li>
+							<li class="hq7">{{comment.comentario}}
+							<li class="hq6"><a href="/quizzes/{{quiz.quizId}}#comentario{{comment.id}}" class="glyphicon glyphicon-search" title="Consultar"></a>
+								<a href="#" ng-click="activeComment(comment)"  class="glyphicon glyphicon-chevron-down" title="Deshabilitar" ng-if="comment.active"></a>
+								<a href="#" ng-click="activeComment(comment)" class="glyphicon glyphicon-ban-circle" title="Habilitar" ng-if="!comment.active"></a>
+								<a href="#" ng-click="deleteComment(comment)" class="glyphicon glyphicon-remove" title="Eliminar"></a>
+							</li>
+						</ul>
+					</div>
+				</div>	
+			</div>
+    	</div>	
+    	<div class="add">
+			<a href="/quizzes/add" class="btn btn-danger">Nueva pregunta</a>
+		</div>
+    </div>	
+  </div>
+</div>
