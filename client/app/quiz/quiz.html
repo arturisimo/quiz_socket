@@ -32,10 +32,10 @@
             </div>
             
             <div class="add-comentario" >
-              <form name="formComment" ng-submit="addComment(formComment,quiz)" >
+              <form name="formComment" ng-submit="addComment(formComment,quiz)" novalidate>
                 <legend>Añadir un comentario</legend>                
             
-                <div class="alert {{classFeedback}}" ng-if="msgComment !==undefined ">
+                <div class="alert {{classFeedback}}" ng-if="msgComment">
                   <p>{{msgComment}}</p>
                   <ul>
                     <li ng-repeat="error in errors">{{error.message}}</li>
@@ -46,13 +46,14 @@
                   <label for="">Nombre</label>
                   <input type="text" class="form-control" placeholder="Nombre" ng-model="formComment.nombre"> 
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': formComment.site.$invalid && submitted }">
                   <label for="">Página web</label>
                   <input type="text" class="form-control" placeholder="Página web" ng-model="formComment.site">  
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': formComment.comentario.$invalid && submitted }">
                   <label for="">Comentario <span>(Obligatorio)</span></label>
-                  <textarea ng-model="formComment.comentario" class="form-control" rows="3" maxlenght="250" ></textarea>
+                  <textarea ng-model="formComment.comentario" class="form-control" rows="3" maxlength="250" ng-change="controlLength(formComment.comentario)" required ></textarea>
+                  <p><span id="commentLength">250</span> caracteres</p>
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
               </form>

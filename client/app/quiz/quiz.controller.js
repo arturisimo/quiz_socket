@@ -58,9 +58,13 @@ angular.module('quizApp').controller('QuizCtrl', function ($scope, $routeParams,
            $scope.msgComment="Se ha producido los siguientes errores:";
            $scope.errors=error.errors;
            $scope.classFeedback="alert-danger";
-        });
-       
+        });       
     };
+    
+    $scope.controlLength = function(comentario){
+        angular.element(document.querySelector('#commentLength')).text(250-comentario.length);        
+    };
+    
 
 });
 
@@ -135,24 +139,21 @@ angular.module('quizApp').controller('QuizEditCtrl', function ($scope, $routePar
   
     $scope.addQuiz = function(form) {
       $scope.submitted = true;
-      $scope.msg="Se ha producido los siguientes errores:";
-      $scope.classFeedback="alert-danger";
+      $scope.classFeedback="alert-success";
 
       if(form._id){
         $http.put('/api/quizzes/'+form._id, form).success(function(quiz) {
           $scope.quiz = quiz;
           $scope.msg = 'La pregunta #'+quiz.quizId+' se ha modificado correctamente';
-          $scope.classFeedback="alert-success";
         }).error(function(error) {
            $scope.errors=error.errors;
         });
       }  else {
         $http.post('/api/quizzes',form).success(function(quiz) {
           $scope.quiz = {};
+          $scope.submitted = false;
           $scope.msg = 'La pregunta se ha añadido correctamente';
-          $scope.classFeedback="alert-success";
         }).error(function(error){
-           console.log(error.errors);
            $scope.errors = error.errors;
         });
       } 
