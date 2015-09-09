@@ -26,8 +26,10 @@
               </p>
 
               <div ng-if="quizFB !==undefined && !quizFB.ok && quizFB.id==quiz.quizId" class="alert alert-danger">
-                <p><strong>{{quizFB.respuesta}}</strong> no es correcto! </p>
-                <a href="#" ng-click="repeatQuiz(formQuiz)" title="Intentar de nuevo" ng-if="!comment.active"><span class="glyphicon glyphicon-repeat pull-right"></span></a>
+                <p><strong>{{quizFB.respuesta}}</strong> no es correcto! 
+                   <a href="#" ng-click="repeatQuiz(formQuiz)" title="Intentar de nuevo" ng-if="!comment.active"><span class="glyphicon glyphicon-repeat pull-right"></span></a>
+                </p>
+                
               </div>
               <div ng-if="quizFB !==undefined && quizFB.ok && quizFB.id==quiz.quizId" class="alert alert-success">
                 <p><strong>{{quizFB.respuesta}}</strong> es correcto </p>

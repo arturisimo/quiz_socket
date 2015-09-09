@@ -6,19 +6,13 @@ angular.module('quizApp').controller('NavbarCtrl', function ($scope, $location, 
       
       $scope.menu = [{ 'title': 'Inicio',
                        'link': '/quiz-admin'
-                     },
-                     { 'title': 'Estadisticas',
-                       'link': '/stadistics'
                      }];
     } else {
 
       $scope.menu = [{ 'title': 'Inicio',
                       'link': '/'
                     },
-                    {'title': 'Preguntas',
-                     'link': '/quizzes'
-                    },
-                    {'title': 'Créditos',
+                    {'title': 'READ.me',
                      'link': '/author'
                     }];
     }

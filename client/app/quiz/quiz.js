@@ -2,12 +2,7 @@
 
 angular.module('quizApp').config(function ($routeProvider) {
 
-    $routeProvider.when('/quizzes/add', {
-        templateUrl: 'app/quiz/add.html',
-        controller: 'QuizEditCtrl'
-    });
-    
-    $routeProvider.when('/quizzes', {
+    $routeProvider.when('/', {
         templateUrl: 'app/quiz/quizzes.html',
         controller: 'QuizCtrl'
     });
@@ -27,15 +22,6 @@ angular.module('quizApp').config(function ($routeProvider) {
         controller: 'QuizAdminCtrl'
     });
 
-    $routeProvider.when('/quizzes/:id/edit', {
-        templateUrl: 'app/quiz/add.html',
-        controller: 'QuizEditCtrl'
-    });
-
-    $routeProvider.when('/stadistics', {
-        templateUrl: 'app/quiz/stats.html',
-        controller: 'StatsCtrl'
-    });
     
 
 });

@@ -38,21 +38,22 @@
 	display:none;
 }
 
-.quizzes > li > a, .comments > li > a  {
+
+.quizzes > li > a, .comments > li > a, #stats-quiz > li> a, #add-quiz > li> a {
     color: #777777;
-    paddin:0 10px;
 }
-.quizzes > li > a:hover, .comments > li > a:hover,  .quizzes > li > a:focus, .comments > li > a:focus {
+.quizzes > li > a:hover, .comments > li > a:hover,  .quizzes > li > a:focus, .comments > li > a:focus,
+#stats-quiz > li> a:hover, #add-quiz > li> a:hover, #stats-quiz > li> a:focus, #add-quiz > li> a:focus {
     background-color: transparent;
     color: #333333;
 }
 .quizzes > li > a > span, .comments > li > a > span{
     padding:0 5px;
 }
-.comments  li {
+.comments  li, #stats-quiz li {
 	border:0px !important;
 }
-.comments hr{
+.comments hr, #stats-quiz hr{
 	margin:0px;
 }
 .muted{
