@@ -10,23 +10,36 @@
 <div class="container">
   <div class="row">
 
-    <div class="col-lg-12" ng-if="msg === undefined">
+    <div class="col-lg-12">
 
       <ul class="nav nav-stacked col-md-8 col-lg-6 col-sm-8" >
         <li>
-            <form name="formQuiz" ng-submit="validateQuiz(formQuiz, quiz)" >
-              <legend>{{quiz.pregunta}}<span class='tematica'>{{quiz.tema}}<span></legend>
             
-              <div class="form-group form-inline">
-              	<input type="text" class="form-control" placeholder="responde aquí" required ng-model="formQuiz.respuesta"> 
-                <button type="submit" class="btn btn-primary">Enviar</button>
+             <form name="formQuiz" ng-submit="validateQuiz(formQuiz, quiz)" >
+              <legend>{{quiz.pregunta}}<span class='tematica'>{{quiz.tema}}<span></legend>
+
+             <p class="input-group" ng-if="quizFB === undefined || quizFB.id!=quiz.quizId">
+                <input type="text" class="form-control" placeholder="responde aquí" required ng-model="formQuiz.respuesta"> 
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-primary">Contestar</button>
+                </span>  
+              </p>
+
+              <div ng-if="quizFB !==undefined && !quizFB.ok && quizFB.id==quiz.quizId" class="alert alert-danger">
+                <p><strong>{{quizFB.respuesta}}</strong> no es correcto! </p>
+                <a href="#" ng-click="repeatQuiz(formQuiz)" title="Intentar de nuevo" ng-if="!comment.active"><span class="glyphicon glyphicon-repeat pull-right"></span></a>
               </div>
+              <div ng-if="quizFB !==undefined && quizFB.ok && quizFB.id==quiz.quizId" class="alert alert-success">
+                <p><strong>{{quizFB.respuesta}}</strong> es correcto </p>
+              </div>
+
             </form>
 
             <div class="comentario" ng-repeat="comment in quiz.comments" ng-if="comment.active" id="comentario{{comment._id}}">
               <legend>
-                <strong><a href="{{comment.site}}">{{comment.nombre}}</a></strong>...
-              <span class="tematica">{{comment.createdAt | date:'yy/MM/yyyy'}}</span>
+                <strong ng-if="comment.site"><a href="{{comment.site}}">{{comment.nombre}}...</a></strong>
+                <strong ng-if="!comment.site">{{comment.nombre}}...</strong> 
+                <span class="tematica">{{comment.createdAt | date:'yy/MM/yyyy'}}</span>
               </legend>
               <p>{{comment.comentario}}</p>
             </div>
@@ -53,7 +66,7 @@
                 <div class="form-group" ng-class="{'has-error': formComment.comentario.$invalid && submitted }">
                   <label for="">Comentario <span>(Obligatorio)</span></label>
                   <textarea ng-model="formComment.comentario" class="form-control" rows="3" maxlength="250" ng-change="controlLength(formComment.comentario)" required ></textarea>
-                  <p><span id="commentLength">250</span> caracteres</p>
+                  <p class="pull-right muted"><span id="commentLength">250</span> caracteres</p>
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
               </form>
@@ -62,12 +75,5 @@
         </li>
       </ul>
     </div>
-    <div class="col-lg-12" ng-if="msg !==undefined ">
-    	<div class="alert {{classFeedback}}"><p><strong>{{respuesta}}</strong> {{msg}} </p></div>
-
-  		<p class="navbar-text pull-right">
-  			<a href="/quizes" class="navbar-link">Volver a la página inicial</a>
-		  </p>
-    </div>	
   </div>
 </div>

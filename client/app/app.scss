@@ -79,6 +79,12 @@ h1 span {
     color: #777;
     text-decoration: underline;
 }
+label span{
+  font-weight:normal;
+  color: #777;
+  margin: 0px 5px;
+  font-size: 12px
+}
 
 // Component styles are injected through grunt
 // injector

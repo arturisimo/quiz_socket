@@ -11,19 +11,28 @@
   <div class="row">
     <div class="col-lg-12">
       <ul class="nav nav-stacked col-md-8 col-lg-8 col-sm-8" ng-repeat="quiz in quizes">
-        <li ng-if="msg === undefined">
-            <form name="formQuiz" ng-submit="validateQuiz(formQuiz, quiz)" >
-              <legend><span><a href="{{ '/quizzes/' + quiz.quizId }}">#{{quiz.quizId}}</a></span> {{quiz.pregunta}}<span class='tematica'>{{quiz.tema}}<span></legend>
-            
-              <div class="form-group form-inline">
+           <form name="formQuiz" ng-submit="validateQuiz(formQuiz, quiz)" >
+              <legend><span><a href="{{ '/quizzes/' + quiz.quizId }}">#{{quiz.quizId}}</a></span> {{quiz.pregunta}} 
+              <span class='tematica'>{{quiz.tema}}<span></legend>
+              
+              <p class="input-group" ng-if="quizFB === undefined || quizFB.id!=quiz.quizId">
                 <input type="text" class="form-control" placeholder="responde aquí" required ng-model="formQuiz.respuesta"> 
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-primary">Contestar</button>
+                </span>  
+              </p>
+
+              <div ng-if="quizFB !==undefined && !quizFB.ok && quizFB.id==quiz.quizId" class="alert alert-danger">
+                <p><strong>{{quizFB.respuesta}}</strong> no es correcto! 
+                   <a href="#" ng-click="repeatQuiz(formQuiz)" title="Intentar de nuevo" ng-if="!comment.active"><span class="glyphicon glyphicon-repeat pull-right"></span></a>
+                </p>
               </div>
+              <div ng-if="quizFB !==undefined && quizFB.ok && quizFB.id==quiz.quizId" class="alert alert-success">
+                <p><strong>{{quizFB.respuesta}}</strong> es correcto </p>
+              </div>
+
             </form>
         </li>
-        <li ng-if="msg !==undefined ">
-          <div class="alert {{classFeedback}}"><p><strong>{{respuesta}}</strong> {{msg}} </p></div>
-        </li>  
       </ul>
     </div>
   </div>

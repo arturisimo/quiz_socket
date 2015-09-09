@@ -9,11 +9,11 @@ angular.module('quizApp')
       if (form.$valid) {
         Auth.changePassword($scope.user.oldPassword, $scope.user.newPassword)
           .then(function() {
-            $scope.message = 'Password successfully changed.';
+            $scope.message = 'El password ha cambiado correctamente.';
           })
           .catch(function() {
             form.password.$setValidity('mongoose', false);
-            $scope.errors.other = 'Incorrect password';
+            $scope.errors.other = 'El password es incorrecto.';
             $scope.message = '';
           });
       }

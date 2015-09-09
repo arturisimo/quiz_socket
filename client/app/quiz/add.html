@@ -20,7 +20,7 @@
 
 			<div class="form-group" ng-class="{'has-error': formQuiz.pregunta.$invalid && submitted }">
 				<label for="">Pregunta <span>(Obligatorio)</span></label>
-				<input type="text" name="pregunta" class="form-control" ng-model="quiz.pregunta" placeholder="Nueva pregunta" ng-value="{{quiz.pregunta}}" required  >
+				<input type="text" name="pregunta" class="form-control" ng-model="quiz.pregunta" placeholder="Nueva pregunta" ng-value="quiz.pregunta" required  >
 				<p class="help-block" ng-show="formQuiz.pregunta.$error.required && submitted">
             		La pregunta es un campo obligatorio
           		</p>
@@ -28,7 +28,7 @@
 			
 			<div class="form-group" ng-class="{'has-error': formQuiz.respuesta.$invalid && submitted }">
 				<label for="">Respuesta <span>(Obligatorio)</span></label>
-				<input type="text" name="respuesta" class="form-control" ng-model="quiz.respuesta" placeholder="Aquí la respuesta" ng-value="{{quiz.respuesta}}" required >
+				<input type="text" name="respuesta" class="form-control" ng-model="quiz.respuesta" placeholder="Aquí la respuesta" ng-value="quiz.respuesta" required >
 				<p class="help-block" ng-show="formQuiz.respuesta.$error.required && submitted">
             		La respuesta es un campo obligatorio
           		</p>
@@ -36,7 +36,7 @@
 			
 			<div class="form-group" ng-class="{'has-error': formQuiz.tema.$invalid && submitted }">
 				<label for="">Temática <span>(Obligatorio)</span></label>
-				<select class="form-control" name="tema" ng-model="quiz.tema"  required >
+				<select class="form-control" name="tema" ng-model="quiz.tema" ng-value="quiz.tema"  required >
 				    <option value="">Selecciona la temática</option>
 				    <option ng-repeat="tema in temas" value="{{tema}}">
 				      {{tema}}

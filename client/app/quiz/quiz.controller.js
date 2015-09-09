@@ -4,7 +4,7 @@ angular.module('quizApp').controller('QuizCtrl', function ($scope, $routeParams,
     $scope.quizes = [];
     $scope.quiz = {};
 
-    console.log("QuizCtrl" + JSON.stringify($routeParams.search));
+    console.log('QuizCtrl' + JSON.stringify($routeParams.search));
 
     if($routeParams.id){
       $http.get('/api/quizzes/'+$routeParams.id).success(function(quiz) {
@@ -13,7 +13,7 @@ angular.module('quizApp').controller('QuizCtrl', function ($scope, $routeParams,
       });
     } else {
       if(Auth.isLoggedIn()){
-         $location.path( "/quiz-admin");
+         $location.path( '/quiz-admin');
       }
 
       $http.get('/api/quizzes').success(function(quizes) {
@@ -24,15 +24,21 @@ angular.module('quizApp').controller('QuizCtrl', function ($scope, $routeParams,
 
     $scope.validateQuiz = function(form, quiz) {
       $scope.submitted = true;
+      
+      if(quiz.respuesta.toLowerCase() == form.respuesta.toLowerCase() ) {
+          $scope.quizFB={'ok':true, 'id': quiz.quizId, 'respuesta': form.respuesta};
+      } else {
+          $scope.quizFB={'ok':false, 'id': quiz.quizId, 'respuesta': form.respuesta};
+      }
 
-       $scope.classFeedback="alert-danger";
-       $scope.msg="no es correcto";
-       $scope.respuesta=form.respuesta;
+      form.respuesta='';
 
-       if(quiz.respuesta == form.respuesta ) {
-          $scope.msg="es correcto";
-          $scope.classFeedback="alert-success";
-       } 
+    };
+
+    $scope.repeatQuiz = function(form) {
+       $scope.submitted = false;
+       form.respuesta = '';
+       $scope.quizFB = undefined;
     };
 
     $scope.addComment = function(formComment,quiz) {
@@ -71,6 +77,7 @@ angular.module('quizApp').controller('QuizCtrl', function ($scope, $routeParams,
 angular.module('quizApp').controller('QuizAdminCtrl', function ($scope, $routeParams, $http, socket, $location, Auth) {
     $scope.quizes = [];
     $scope.quiz = {};
+    $scope.temas = ["otro", "humanidades","ocio","ciencia","tecnologia","Geografía"];
 
     console.log("QuizAdminCtrl" + JSON.stringify($routeParams.search));
 
@@ -86,13 +93,13 @@ angular.module('quizApp').controller('QuizAdminCtrl', function ($scope, $routePa
     
     $scope.toggleComment = function(quizId){
         angular.element(document.querySelector('#comments_'+quizId)).toggleClass('hide');
-        var icon = angular.element(document.querySelector('#icon_'+quizId));
-        if (icon.text() == '+'){
-            icon.text("-");
-        } else {
-            icon.text("+");
-        }
     };
+
+    $scope.editQuiz = function(quiz){
+        $scope.edit = {edit:true, quizId:quiz.quizId};
+        angular.element(document.querySelectorAll('.comments')).addClass('hide');
+    };
+    
 
     $scope.delete = function(quiz) {
         $http.delete('/api/quizzes/'+quiz._id);
@@ -113,6 +120,17 @@ angular.module('quizApp').controller('QuizAdminCtrl', function ($scope, $routePa
            $location.path( "/quiz-admin");
         });
     };
+
+    $scope.addQuiz = function(form) {
+      $scope.submitted = true;
+      
+      $http.put('/api/quizzes/'+form._id, form).success(function(quiz) {
+        $scope.quiz = quiz;
+        $scope.edit= undefined;
+      }).error(function(error) {
+         $scope.errors=error.errors;
+      });
+    }
 
   });
 

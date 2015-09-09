@@ -30,23 +30,6 @@
 	color:#a94442;
 }
 
-table a{
-	color: #777;
-	padding: 0px 3px;
-	font-size: 17px;
-}
-table a:hover{
-	color: #333;
-	text-decoration: none;
-}
-form label span{
-	font-weight: normal;
-}
-
-.comments{
-	background-color: #e7e7e7 !important;
-	font-size: 12px;
-}
 .github{
 	height: 18px;
 	width: 18px;
@@ -55,52 +38,23 @@ form label span{
 	display:none;
 }
 
-.table-quiz {
+.quizzes > li > a, .comments > li > a  {
+    color: #777777;
+    paddin:0 10px;
 }
-
-.table-quiz div{
-	clear:both;
-}
-
-.table-quiz ul li { 
-	list-style-type: none;
-    padding: 0px;	
-    float: left;
-    text-align:left;
-}
-
-.table-quiz ul li a {
-    color: #777;
-    text-decoration:none;
-}
-.table-quiz ul li a:hover {
+.quizzes > li > a:hover, .comments > li > a:hover,  .quizzes > li > a:focus, .comments > li > a:focus {
     background-color: transparent;
-    color: #333;
+    color: #333333;
 }
-
-.th {
-	border-bottom:1px solid #ccc;
-	font-weight: bold;
-	height:20px;
+.quizzes > li > a > span, .comments > li > a > span{
+    padding:0 5px;
 }
-.tr {
-	border-bottom:1px solid #ccc;
-	height:20px;
+.comments  li {
+	border:0px !important;
 }
-.hq1 {
-	width:5%;
+.comments hr{
+	margin:0px;
 }
-
-.hq6{
-	width:10%;	
-}
-
-.hq5{
-	width:15%;
-}
-.hq2,.hq3,.hq4{
-	width:20%;
-}
-.hq7{
-	width:60%;
+.muted{
+	color:#999;
 }
