@@ -16,7 +16,6 @@ var mongoose = require('mongoose');
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
-    console.log(err.message);
     res.status(statusCode).send(err);
   };
 }
@@ -115,10 +114,8 @@ exports.destroy = function(req, res) {
 // search
 exports.search = function(req, res) {
   var search = req.params.search;
-  console.log('search'+search);
   Quiz.find({pregunta: new RegExp(search, "i")}).sort({createdAt:1}).populate('comments').execAsync(function (err, quizes) {
     if(err) { return handleError(res, err); }
-    console.log(quizes);
     return res.status(200).json(quizes);
   });
 };
