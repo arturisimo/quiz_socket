@@ -8,11 +8,15 @@
 </div>
 
 <div class="container">
-  <ul class="list-group">
+  <ul class="list-group users">
     <li class="list-group-item" ng-repeat="user in users">
+        
+        <span class="glyphicon glyphicon-cog pull-left role" ng-if="user.role=='admin'" ></span>
+        <span class="glyphicon glyphicon-user pull-left role" ng-if="user.role=='user'" ></span>
+
         <strong>{{user.name}}</strong><br>
         <span class="text-muted">{{user.email}}</span>
-        <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+        <a ng-click="delete(user)"><span class="glyphicon glyphicon-remove pull-right"></span></a>
     </li>
   </ul>
 </div>

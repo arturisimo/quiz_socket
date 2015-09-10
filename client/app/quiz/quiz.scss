@@ -39,11 +39,10 @@
 }
 
 
-.quizzes > li > a, .comments > li > a, #stats-quiz > li> a, #add-quiz > li> a {
+.quizzes > li > a, .comments > li > a, .quizzes > li > form > a, .showStats, .showAddForm {
     color: #777777;
 }
-.quizzes > li > a:hover, .comments > li > a:hover,  .quizzes > li > a:focus, .comments > li > a:focus,
-#stats-quiz > li> a:hover, #add-quiz > li> a:hover, #stats-quiz > li> a:focus, #add-quiz > li> a:focus {
+.quizzes > li > a:hover, .comments > li > a:hover, .quizzes > li > form > a:hover, .showStats:hover, .showAddForm:hover {
     background-color: transparent;
     color: #333333;
 }

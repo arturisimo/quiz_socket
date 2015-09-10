@@ -117,17 +117,21 @@ angular.module('quizApp').controller('QuizAdminCtrl', function ($scope, $routePa
 
     $scope.showAddForm = function(){
         angular.element(document.querySelector('#add-quiz')).toggleClass('hide');
+        angular.element(document.querySelector('.showAddForm')).toggleClass('glyphicon-minus');
     };
 
     $scope.showStats = function(){
         angular.element(document.querySelector('#stats-quiz')).toggleClass('hide');
+        angular.element(document.querySelector('.showStats')).toggleClass('glyphicon-minus');
     };
 
     $scope.editQuiz = function(quiz){
         $scope.edit = {edit:true, quizId:quiz.quizId};
         angular.element(document.querySelectorAll('.comments')).addClass('hide');
     };
-    
+    $scope.noEditQuiz = function(quiz){
+        $scope.edit = undefined;
+    };
 
     $scope.delete = function(quiz) {
         $http.delete('/api/quizzes/'+ quiz._id).success(function() {
@@ -175,10 +179,10 @@ angular.module('quizApp').controller('QuizAdminCtrl', function ($scope, $routePa
     };
 
     $scope.saveEditQuiz = function(form) {
-      $scope.submitted = true;
+      $scope.submitted = false;
       
       $http.put('/api/quizzes/'+form._id, form).success(function(quiz) {
-        $scope.quiz = quiz;
+        $scope.quiz = {};
         $scope.edit= undefined;
       }).error(function(error) {
          $scope.errors=error.errors;
