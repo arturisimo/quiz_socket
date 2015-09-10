@@ -15,7 +15,6 @@ var Comment = require('./comment.model');
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
-    console.log('ERROR SERVER COMMENT >' + err.message);
     res.status(statusCode).send(err);
   };
 }

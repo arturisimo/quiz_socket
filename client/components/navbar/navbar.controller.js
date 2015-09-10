@@ -11,9 +11,6 @@ angular.module('quizApp').controller('NavbarCtrl', function ($scope, $location, 
 
       $scope.menu = [{ 'title': 'Inicio',
                       'link': '/'
-                    },
-                    {'title': 'READ.me',
-                     'link': '/author'
                     }];
     }
 

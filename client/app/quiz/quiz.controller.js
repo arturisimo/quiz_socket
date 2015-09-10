@@ -93,7 +93,6 @@ function getStats(quizes) {
                        num_quiz_nocomment + ' preguntas sin comentarios',
                        num_quiz_comment + ' preguntas con comentarios'
                      ];
-      console.log(quizes.length + ' preguntas');
       return stats;               
   }
 
@@ -102,8 +101,6 @@ angular.module('quizApp').controller('QuizAdminCtrl', function ($scope, $routePa
     $scope.quiz = {};
     $scope.stats = [];
     $scope.temas = ["otro", "humanidades","ocio","ciencia","tecnologia","Geografía"];
-
-    console.log("QuizAdminCtrl" + JSON.stringify($routeParams.search));
 
     if(!Auth.isLoggedIn()){
        $location.path( "/quizzes");
@@ -177,7 +174,7 @@ angular.module('quizApp').controller('QuizAdminCtrl', function ($scope, $routePa
     
     };
 
-    $scope.editQuiz = function(form) {
+    $scope.saveEditQuiz = function(form) {
       $scope.submitted = true;
       
       $http.put('/api/quizzes/'+form._id, form).success(function(quiz) {
@@ -197,8 +194,6 @@ angular.module('quizApp').controller('QuizSearchCtrl', function ($scope, $routeP
     $scope.title = 'Preguntas: "'+ $routeParams.search + "'";
     $scope.quizes = [];
     $scope.search = $routeParams.search;
-
-    console.log("QuizSearchCtrl" + JSON.stringify($routeParams.search));
 
     if($routeParams.search){
       $http.get('/api/quizzes/search/'+$routeParams.search).success(function(quizes) {

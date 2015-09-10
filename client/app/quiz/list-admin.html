@@ -18,7 +18,7 @@
             {{quiz.pregunta}}<br>
             <span>{{quiz.respuesta}}</span></label>
 
-          <form name="formQuiz" class="form-inline" ng-submit="editQuiz(quiz)" ng-if="edit!==undefined && edit.edit && edit.quizId==quiz.quizId" novalidate>  
+          <form name="formQuiz" class="form-inline" ng-submit="saveEditQuiz(quiz)" ng-if="edit!==undefined && edit.edit && edit.quizId==quiz.quizId" novalidate>  
             <div class="form-group">
               <input type="text" name="pregunta" class="form-control" ng-model="quiz.pregunta" placeholder="Aquí la pregunta" ng-value="quiz.pregunta" required  >
               <input type="text" name="respuesta" class="form-control" ng-model="quiz.respuesta" placeholder="Aquí la respuesta" ng-value="quiz.respuesta" required >
@@ -28,7 +28,10 @@
           </form>       
         
         <a href="#" ng-click="delete(quiz)" title="Eliminar" ><span class="glyphicon glyphicon-remove pull-right"></span></a>
-        <a href="#" ng-click="toggleComment(quiz.quizId)" ng-if="quiz.comments.length > 0" title="{{quiz.comments.length}} comentarios" ><span class="glyphicon glyphicon-comment pull-right"></span></a>
+        <a href="#" ng-click="toggleComment(quiz.quizId)" ng-if="quiz.comments.length > 0" title="{{quiz.comments.length}} comentarios" >
+          <span class="pull-right" style="padding:0px;font-size:10px">{{quiz.comments.length}}</span>
+          <span class="glyphicon glyphicon-comment pull-right"></span>
+        </a>
 
 		<ul class="list-group comments hide" id="comments_{{quiz.quizId}}" ng-if="quiz.comments.length > 0">
 	    <li class="list-group-item" ng-repeat="comment in quiz.comments" >
