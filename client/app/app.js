@@ -6,7 +6,8 @@ angular.module('quizApp', [
   'ngSanitize',
   'ngRoute',
   'btford.socket-io',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'leaflet-directive'
 ])
   .config(function($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
