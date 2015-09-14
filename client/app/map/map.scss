@@ -2,3 +2,17 @@
   width:700px;
   height:500px;
 }
+.address > li > div > a {
+    color: #777777;
+}
+.address > li > div > a span{
+   margin-left: 10px;
+}
+.address > li > div > a:hover {
+    background-color: transparent;
+    color: #333333;
+}
+.address > li:hover {
+	background-color:#eee;
+	cursor:pointer;
+}
