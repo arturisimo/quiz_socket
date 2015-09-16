@@ -1,7 +1,23 @@
-#map {
-  width:700px;
-  height:500px;
+.map-admin {
+  width:60em;
+  height:50em;
+  border:0.1em solid #dddddd
 }
+
+.map {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+.angular-leaflet-map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
 .address > li > div > a {
     color: #777777;
 }
@@ -13,6 +29,10 @@
     color: #333333;
 }
 .address > li:hover {
-	background-color:#eee;
+	background-color:#dddddd;
 	cursor:pointer;
+}
+
+.navbar {
+  z-index: 10;
 }

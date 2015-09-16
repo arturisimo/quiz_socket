@@ -1,6 +1,5 @@
 'use strict';
 
-
 /*
  * TODO: eliminar el marcador si haces doble click
  *       si no guardas quitar el marcador
@@ -11,7 +10,7 @@
  *
  */
 
-angular.module('quizApp').controller('MapCtrl', function($scope, leafletData, $http, socket, Auth) {
+angular.module('quizApp').controller('MapCtrl', function($scope, leafletData, nominatim, wikipedia, $http, socket, Auth) {
       
       $scope.listAddress = [];
       var markers = [];
@@ -26,10 +25,23 @@ angular.module('quizApp').controller('MapCtrl', function($scope, leafletData, $h
            }
       });
 
+      var formatSummaryData = function(summaryData) {
+        var url = "http://es.wikipedia.org/wiki/" + summaryData.title;
+        return "<strong><a target='_blank' href='" + url + "'>" + summaryData.title + "</a></strong><br>"+summaryData.extract;
+      }
+
       leafletData.getMap('map').then(function(map) {
+
+        L.Icon.Default.imagePath = './bower_components/leaflet/dist/images';
+        L.AwesomeMarkers.imagePath = './bower_components/Leaflet.awesome-markers/dist/images';
 
         var questionIcon = L.AwesomeMarkers.icon({
           icon: 'glyphicon-question-sign',
+          markerColor: 'red',
+        });
+
+        var wikipediaIcon = L.AwesomeMarkers.icon({
+          icon: 'glyphicon-star',
           markerColor: 'red',
         });
         
@@ -51,6 +63,35 @@ angular.module('quizApp').controller('MapCtrl', function($scope, leafletData, $h
           map.addLayer(markers);
 
         });
+
+        //wikipedia markers
+        if(!$scope.isLoggedIn()){
+
+          var lastMarker = $scope.Madrid;
+          if($scope.listAddress.length > 0 ) {
+            lastMarker = $scope.listAddress[$scope.listAddress.length-1];  
+          }
+          
+          wikipedia.getGeodata(lastMarker.lat, lastMarker.lng).success(function(geodata){
+
+            var markersWP = new L.FeatureGroup();
+            
+            geodata.query.geosearch.forEach(function(wPMarker){
+              var latLng = L.latLng(wPMarker.lat, wPMarker.lon);
+                  var marker = L.marker(latLng, {icon: wikipediaIcon});
+
+                  wikipedia.getSummaryArticle(wPMarker.title).success(function(articleData) {
+                    var summaryData = articleData.query.pages[wPMarker.pageid];
+                    marker.bindPopup(formatSummaryData(summaryData)).openPopup();
+                    markersWP.addLayer(marker);
+                  }); 
+            });
+              
+            map.addLayer(markersWP);
+
+          });
+
+        }  
 
         $scope.deleteAddress = function(address){
             $http.delete('/api/maps/'+address._id).success(function() {
@@ -105,20 +146,14 @@ angular.module('quizApp').controller('MapCtrl', function($scope, leafletData, $h
         };
       
         $scope.searchAddress = function(form){
-          
-          $scope.searchResults = [];
+
+          nominatim.searchAddress(form.search)
+          .success(function(searchResults){ 
+            $scope.searchResults = searchResults;
+          });
+
           $scope.submitted = true;
           
-          $http.get('http://nominatim.openstreetmap.org/search?format=json&q='+ form.search +'&addressdetails=1&accept-language=es')
-              .success(function(response) {
-                  response.forEach(function(searchResult){
-                    $scope.searchResults.push(searchResult);
-                  });
-              })
-              .error(function(data, status, headers, config) {
-                console.log("error");
-            });
-
         };
 
         $scope.selectAddress = function(resultSearch){
@@ -213,17 +248,13 @@ angular.module('quizApp').controller('MapCtrl', function($scope, leafletData, $h
                   markers.addLayer(marker);
 
                   //obtener address con nominatin
-                  $http.get('http://nominatim.openstreetmap.org/reverse?format=json&lat='+ latLng.lat+'&lon='+latLng.lng+'&addressdetails=1&accept-language=es')
-                    .success(function(response) {
-                       $scope.address = { house_number: response.address.house_number, suburb: response.address.suburb, road: response.address.road, postcode: response.address.postcode,
-                                          country: response.address.country, country_code: response.address.country_code, city: response.address.city, 
-                                          lat:latLng.lat, lng: latLng.lng
-                                        };
-                       marker.bindPopup('<strong>'+response.address.road+' ' + response.address.house_number +'</strong><br>'+response.display_name).openPopup();
+                  nominatim.getAddressByLatLng(latLng)
+                    .success(function(address) {
+                       marker.bindPopup('<strong>' + address.road+' ' + address.house_number +'</strong><br>'+address.display_name).openPopup();
                        $scope.edit=true;
                     })
-                    .error(function(data, status, headers, config) {
-                      console.log("error");
+                    .error(function(err) {
+                      console.log(err);
                     });
                   }
 
